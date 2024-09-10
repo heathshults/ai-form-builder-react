@@ -1,0 +1,113 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins/breakpoints';
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.hs-wrap {
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+
+// Layout grid
+.hs-wrap {  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 53px 1fr 53px;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "grid-header"
+    "grid-body"
+    "grid-footer";
+}
+
+.grid-header {
+  grid-area: grid-header;
+  color: var(--hs-toolbar-container-text-color);
+  background-color: var(--hs-toolbar-container-background-color);
+}
+
+.grid-body { grid-area: grid-body; }
+
+.grid-footer { grid-area: grid-footer;
+  color: #fff;
+
+  background-color: #010409;
+}
+
+
+// body grid
+.hs-body-container {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "grid-sidebar grid-content";
+
+  color: var(--text-primary-color);
+
+  height: 100%;
+  transition: all .3s ease-in-out;
+  hs-sidebar {
+    width: 250px;
+
+    transition: all .3s ease-in-out;
+
+  }
+}
+
+.grid-sidebar { grid-area: grid-sidebar;
+  color: var(--hs-toolbar-container-text-color);
+  background-color: #0d1117;
+  overflow-x: hidden;
+}
+
+.grid-content {
+  grid-area: grid-content;
+  background-image: linear-gradient(to right top, #010409, #010409, #0d1117, #2d3139, #2d3139);
+}
+
+
+
+.hs-body-container.hide-sidebar {
+  display: grid;
+  grid-template-columns: 64px 1fr !important;
+  grid-template-rows: 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "grid-sidebar grid-content grid-form-display";
+  height: 100%;
+  transition: all .3s ease-in-out;
+  hs-sidebar {
+    width: 84px;
+
+    transition: all .3s ease-in-out;
+
+  }
+}
+
+.hs-forms-display-conrtainer {
+  height: calc(100% - 100px);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.hs-form-builder-container {
+  height: 100px;
+  box-sizing: border-box;
+}
+
+
+@include media-breakpoint-down(md) {
+  .hs-body-container {
+    grid-template-columns: 84px 1fr;
+    transition: all .3s ease-in-out;
+  }
+
+}

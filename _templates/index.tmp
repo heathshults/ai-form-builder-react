@@ -1,0 +1,2 @@
+import #NAME# from './#COMPONENT_FILE_PREFIX#'
+export default #NAME#

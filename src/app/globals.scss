@@ -1,3 +1,5 @@
+@import '~bootstrap/scss/bootstrap';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -24,4 +26,23 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.hs-form-builder-container {  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 300px;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "hs-form-display"
+    "hs-form-builder-prompt";
+  height: 100%;
+}
+
+.hs-form-display { 
+  grid-area: hs-form-display; 
+}
+
+.hs-form-builder-prompt { 
+  grid-area: hs-form-builder-prompt; 
 }

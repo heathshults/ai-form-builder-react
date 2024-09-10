@@ -1,0 +1,122 @@
+@import '../../../../node_modules/bootstrap/scss/functions';
+@import '../../../../node_modules/bootstrap/scss/variables';
+@import '../../../../node_modules/bootstrap/scss/mixins/breakpoints';
+
+.hs-sidebar-wrapper {
+  width: 250px;
+  height: calc(100vh - 128px);
+  box-sizing: border-box;
+}
+mat-sidenav {
+  width: 250px;
+  box-sizing: border-box;
+}
+
+.hs-sidebar {
+  // position: absolute;
+  // left: 0;
+  overflow-y: auto;
+  width: 250px;
+  z-index: 1000;
+  box-sizing: border-box;
+  height: calc(100vh - 128px);
+  .hide {
+    width: 50px;
+    transition: all .3s ease-in-out;
+  }
+}
+
+.hs-sidebar-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  box-sizing: border-box;
+
+  h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: normal;
+  }
+}
+
+.nav {
+  .nav-link {
+    &.hs-sidebar-nav {
+      margin-top: 1rem;
+      &-item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: .5rem;
+        .nav-icon {
+          display: inline-flex;
+          width: 40px;
+          height: 40px;
+          margin: 0 .5rem ;
+        }
+        .nav-text {
+          display: inline-flex;
+          flex-wrap: nowrap;
+          flex-shrink: 0;
+        }
+      }
+    }
+  }
+}
+
+.hs-body-container.hide-sidebar {
+  .grid-sidebar {
+    .nav {
+      .nav-link {
+        &.hs-sidebar-nav {
+          padding-top: 2rem;
+          &-item {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            &-icon {
+              width: 40px;
+              height: 40px;
+              margin-right: .5rem;
+            }
+            .hs-sidebar-nav-text {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+
+
+.hs-sidebar-body{}
+@include media-breakpoint-down(md) {
+  .hs-sidebar-wrapper {
+    width: 66px;
+    height: calc(100vh - 128px);
+    box-sizing: border-box;
+  }
+  mat-sidenav {
+    width: 66px;
+    box-sizing: border-box;
+  }
+  .hs-sidebar {
+    position: absolute;
+    left: 0;
+    overflow-y: auto;
+    width: 66px;
+    z-index: 1000;
+    box-sizing: border-box;
+    height: 100%;
+    .hide {
+      left: -50px;
+      transition: all .3s ease-in-out;
+    }
+  }
+}

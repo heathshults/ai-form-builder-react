@@ -1,0 +1,23 @@
+:root, .mat-toolbar {
+  // --toolbar-background-color: #151718;
+  --toolbar-background-color: #1a242d;
+  --toolbar-text-color: #eeeeee;
+}
+
+
+.hs-toolabr, .mat-toolbar, mat-toolbar {
+  color: var(--toolbar-text-color) !important;
+  background-color: var(--toolbar-background-color) !important;
+}
+
+.hs-toolbar-title {
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin: 0;
+  .hs-subtitle {
+    font-size: .875rem;
+    font-weight: normal;
+    font-style: italic
+  }
+}
+

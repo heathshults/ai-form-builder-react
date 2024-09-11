@@ -23,6 +23,7 @@
       "@assets/*": ["./src/app/assets/*"],
       "@components/*": ["./src/app/components/*"],
       "@services/*": ["./src/app/services/*"],
+      "@context/*": ["./src/app/context/*"],
       "@views/*": ["./src/app/views/*"]    
     }
   },

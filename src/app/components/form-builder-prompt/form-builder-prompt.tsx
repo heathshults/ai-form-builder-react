@@ -1,15 +1,26 @@
 'use client'
 import * as React from 'react';
+import FormFieldsService from '@services/FormFieldsService';
 import './form-builder-prompt.scss';
-import { formGroupClasses } from '@mui/material';
+
 
 export interface FormBuilderPromptProps {}
 
 function FormBuilderPrompt({ }: FormBuilderPromptProps) {
+  const formFieldService = FormFieldsService.getInstance();
     const saveButton = React.useRef<HTMLButtonElement>(null);
     const buttonGroup = React.useRef<HTMLDivElement>(null);
     const [isSaveButtonActive, setIsSaveButtonActive] = React.useState<boolean>(false);
-    function generateForm() {
+    // console.log('formfieldcontext', fieldBuillder)
+    
+    function generateForm(event:Event) {
+      event.preventDefault();
+      const formFields = (event.target as HTMLFormElement).fields.value;
+      const fieldsArray = formFields.split(',').map((field: string) => field.trim());
+      console.log('fieldsArray', fieldsArray);
+      
+      formFieldService.setFields(fieldsArray);
+       
       !isSaveButtonActive ? setIsSaveButtonActive(true) : void(0);
         
     }
@@ -30,7 +41,7 @@ function FormBuilderPrompt({ }: FormBuilderPromptProps) {
     <div className="hs-form-builder">
       <form onSubmit={generateForm} className="hs-prompt-form">
         <div className="hs-prompt-input-wrapper">
-          <label className="hs-input-label" for="fields">Enter form fields (comma-separated):</label>
+          <label className="hs-input-label" htmlFor="fields">Enter form fields (comma-separated):</label>
             <input id="fields" name="fields" placeholder="e.g., Name, Phone, Address, Email" className="hs-prompt-input form-control-lg"/>
           
           <div ref={buttonGroup} className="hs-action-button-wrapper">

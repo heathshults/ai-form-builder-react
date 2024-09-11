@@ -24,7 +24,7 @@ module.exports = {
                     ]
                 },
                 style: {
-                    name: '[name].module.css',
+                    name: '[name].scss',
                     optional: true
                 },
                 stories: {

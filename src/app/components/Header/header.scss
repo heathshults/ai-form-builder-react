@@ -5,9 +5,10 @@
 }
 
 
-.hs-toolabr, .mat-toolbar, mat-toolbar {
+.hs-toolbar {
   color: var(--toolbar-text-color) !important;
   background-color: var(--toolbar-background-color) !important;
+  padding-y: 1rem;
 }
 
 .hs-toolbar-title {

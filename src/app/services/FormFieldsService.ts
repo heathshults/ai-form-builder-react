@@ -1,11 +1,22 @@
 import { BehaviorSubject } from 'rxjs';
 
-
-
+export interface FieldArray {
+  fields: Field[];
+}
+export interface Field {
+  type: string;
+  name: string;
+  label: string;
+}
+ 
 export class FormFieldsService {
   private static instance: FormFieldsService;
   public updateFieldsEvent: BehaviorSubject<string[]>;
-  public fields: string[] = [''];
+  public fields: Field[] = [
+    {type: 'text', name: 'Example Field Name 1', label: 'Example Label Name 1'},
+    {type: 'text', name: 'Example Field Name 2', label: 'Example Label Name 2'},
+    
+  ];
 
   
   private constructor() {
@@ -30,9 +41,14 @@ export class FormFieldsService {
   }
   
   public setFields(fields: string[]) {
-    this.fields = fields;
+    this.fields = fields.map(field => ({
+      type: 'text',
+      name: field.trim(),
+      label: field.trim(),
+    }));
+    console.log('newArrayOfFields', this.fields);
     this.updateFieldsEvent.next(this.fields);
-  }    
+  }
     
 }
  export default FormFieldsService;

@@ -1,40 +1,38 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 import * as React from 'react';
-import FormFieldsService from '@services/FormFieldsService';
+import { useFormFields } from '@context/FormFieldsContext/FormFieldsContext';
 import './FormBuilderDisplay.scss';
 
 interface FormBuilderDisplayProps {
   children?: React.ReactNode
 };
+interface IFormFields {
+  newFields: string[];
+}
 
-export default function FormBuilderDisplay({children}: FormBuilderDisplayProps) {
-  const formFieldService = FormFieldsService.getInstance();
-  const [fields, setFields] = React.useState<Array<string>>(formFieldService.fields);
-  const fieldsRef = React.useRef(fields);
-  
-  React.useEffect(() => {
-    fieldsRef.current = fields;
-  }, [fields]);
+export const FormBuilderDisplay = ({children}: FormBuilderDisplayProps) => {
+  const { fields } = useFormFields();
+  const FormFields = ({newFields}: IFormFields) => {
+    return fields.map(field => (
+      <div key={field.name} className="form-grid-item">
+        <div className="form-group">
+          <label htmlFor={field.name} className="text-capitalize">{field.label}</label>
+          <input id={field.name} type={field.type} className="form-control" name={field.name} placeholder={field.name}/>
+        </div>
+      </div>
+    ));
+  }
 
-  React.useEffect(() => {
-    const updateFieldsEventSubscription = formFieldService.updateFieldsEvent.subscribe((newFields: string[]) => {
-        console.log('formFields display', newFields);
-        if (newFields.length !== 0) {
-          setFields(newFields);
-        }
-    })
-
-    return () => {
-      updateFieldsEventSubscription.unsubscribe();
-    };
-  }, [formFieldService.updateFieldsEvent]);
-
+  console.log('fields', fields);  
+  console.log('fields', typeof fields);
   
   return (
       <>
-      {fields}
-      
+      <div>{fields.map(field => {
+        Name: {field.name}
+      })}</div>
+      <FormFields newFields={fields} />
         {/* {!fields.length ? 
           <div className="form-grid-item">
           <div className="form-group">
@@ -43,17 +41,19 @@ export default function FormBuilderDisplay({children}: FormBuilderDisplayProps) 
         </div>
       :null}
 */}
-     {/* fields.length ? */}
-       { fields.map((field, index) => {
-          <div key={`${index}-${field}`} className="form-grid-item">
+
+     
+       {/* {newFields.map((field, index) => {
+          <div key={`${index}-${field.name}`} className="form-grid-item">
             <div className="form-group">
-              <label htmlFor={field} className="text-capitalize">{field}</label>
-              <input id={field} className="form-control" name="field" placeholder={field}/>
+              <label htmlFor={field.name} className="text-capitalize">{field.label}</label>
+              <input id={field.name} type={field.type} className="form-control" name={field.name} placeholder={field.name}/>
             </div>
           </div>
-        })}
-    {/* :null  */}
+        }) } */}
+
       </>
     );
 };
 
+export default FormBuilderDisplay

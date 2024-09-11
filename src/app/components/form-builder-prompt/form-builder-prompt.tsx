@@ -1,29 +1,36 @@
 'use client'
-import * as React from 'react';
-import FormFieldsService from '@services/FormFieldsService';
+import React, { useState } from 'react';
+import { useFormFields } from '@context/FormFieldsContext/FormFieldsContext';
 import './form-builder-prompt.scss';
 
 
 export interface FormBuilderPromptProps {}
 
-function FormBuilderPrompt({ }: FormBuilderPromptProps) {
-  const formFieldService = FormFieldsService.getInstance();
+export const FormBuilderPrompt = ({ }: FormBuilderPromptProps) => {
+  const { setFields } = useFormFields();
+  const [fieldsString, setFieldsString] = useState('');
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setFields(fieldsString);
+  };
+
     const saveButton = React.useRef<HTMLButtonElement>(null);
     const buttonGroup = React.useRef<HTMLDivElement>(null);
     const [isSaveButtonActive, setIsSaveButtonActive] = React.useState<boolean>(false);
     // console.log('formfieldcontext', fieldBuillder)
     
-    function generateForm(event:Event) {
-      event.preventDefault();
-      const formFields = (event.target as HTMLFormElement).fields.value;
-      const fieldsArray = formFields.split(',').map((field: string) => field.trim());
-      console.log('fieldsArray', fieldsArray);
+    // function generateForm(event:Event) {
+    //   event.preventDefault();
+    //   const formFields = (event.target as HTMLFormElement).fields.value;
+    //   const fieldsArray = formFields.split(',').map((field: string) => field.trim());
+    //   console.log('fieldsArray', fieldsArray);
       
-      formFieldService.setFields(fieldsArray);
+    //   formFieldService.setFields(fieldsArray);
        
-      !isSaveButtonActive ? setIsSaveButtonActive(true) : void(0);
+    //   !isSaveButtonActive ? setIsSaveButtonActive(true) : void(0);
         
-    }
+    // }
 
     function savePrompt() {
       !isSaveButtonActive ? setIsSaveButtonActive(true) : void(0);
@@ -39,10 +46,17 @@ function FormBuilderPrompt({ }: FormBuilderPromptProps) {
   return (
   <>
     <div className="hs-form-builder">
-      <form onSubmit={generateForm} className="hs-prompt-form">
+      <form onSubmit={handleSubmit} className="hs-prompt-form">
         <div className="hs-prompt-input-wrapper">
           <label className="hs-input-label" htmlFor="fields">Enter form fields (comma-separated):</label>
-            <input id="fields" name="fields" placeholder="e.g., Name, Phone, Address, Email" className="hs-prompt-input form-control-lg"/>
+            <input 
+              id="fields" 
+              name="fields" 
+              placeholder="e.g., Name, Phone, Address, Email" 
+              className="hs-prompt-input form-control-lg"
+              value={fieldsString}
+              onChange={(e) => setFieldsString(e.target.value)}
+            />
           
           <div ref={buttonGroup} className="hs-action-button-wrapper">
                 <button type="submit" className="hs-prompt-button btn">

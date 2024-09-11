@@ -1,6 +1,6 @@
 import FormBuilderPrompt from '@components/form-builder-prompt';
 import FormBuilderDisplay from '@components/FormBuilderDisplay';
-import FormFieldsProvider from '@context/FormFieldsContext';
+import { FormFieldsProvider } from '@context/FormFieldsContext/FormFieldsContext';
 import './globals.scss';
 
 export default function Home() {

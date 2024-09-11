@@ -1,13 +1,15 @@
 'use client'
-import React from 'react';
+import * as React from 'react';
 #STYLE#
+
 interface #NAME#Props {
   children: React.ReactNode
 };
 
-export const #NAME#({children}: #NAME#Props) => {
+export const #NAME# = ({children}: #NAME#Props) => {
     return (
       <>
+        
       </>
     );
 };

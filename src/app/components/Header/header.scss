@@ -1,13 +1,13 @@
-:root, .mat-toolbar {
+:root, .hs-toolbar {
   // --toolbar-background-color: #151718;
-  --toolbar-background-color: #1a242d;
+  --toolbar-background-color: #151718;
   --toolbar-text-color: #eeeeee;
 }
 
 
 .hs-toolbar {
-  color: var(--toolbar-text-color) !important;
-  background-color: var(--toolbar-background-color) !important;
+  color: var(--toolbar-text-color);
+  background-color: var(--toolbar-background-color);
   padding-y: 1rem;
 }
 

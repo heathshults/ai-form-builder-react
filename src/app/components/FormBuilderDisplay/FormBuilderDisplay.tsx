@@ -14,6 +14,15 @@ interface IFormFields {
 export const FormBuilderDisplay = ({children}: FormBuilderDisplayProps) => {
   const { fields } = useFormFields();
   const FormFields = ({newFields}: IFormFields) => {
+    if (!newFields.length) {
+      return (
+        <div className="form-grid-item">
+          <div className="form-group">
+            <p>To get started enter field names in the prompt below and click &quot;Send&quot;</p>
+          </div>
+        </div>
+      );
+    }
     return fields.map(field => (
       <div key={field.name} className="form-grid-item">
         <div className="form-group">
@@ -29,28 +38,9 @@ export const FormBuilderDisplay = ({children}: FormBuilderDisplayProps) => {
   
   return (
       <>
-      <div>{fields.map(field => {
-        Name: {field.name}
-      })}</div>
-      <FormFields newFields={fields} />
-        {/* {!fields.length ? 
-          <div className="form-grid-item">
-          <div className="form-group">
-            <p>To get started enter field names in the prompt below and click &quot;Send&quot;</p>
-          </div>
+        <div className="container p-3 hs-fields-display">
+          <FormFields newFields={fields} />
         </div>
-      :null}
-*/}
-
-     
-       {/* {newFields.map((field, index) => {
-          <div key={`${index}-${field.name}`} className="form-grid-item">
-            <div className="form-group">
-              <label htmlFor={field.name} className="text-capitalize">{field.label}</label>
-              <input id={field.name} type={field.type} className="form-control" name={field.name} placeholder={field.name}/>
-            </div>
-          </div>
-        }) } */}
 
       </>
     );

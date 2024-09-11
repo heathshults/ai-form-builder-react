@@ -27,7 +27,7 @@
 .grid-header {
   grid-area: grid-header;
   color: var(--hs-toolbar-container-text-color);
-  background-color: var(--hs-toolbar-container-background-color);
+  background-color: var(--toolbar-background-color);
 }
 
 .grid-body { grid-area: grid-body; }

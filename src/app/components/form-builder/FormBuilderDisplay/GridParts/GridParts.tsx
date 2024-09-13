@@ -1,15 +1,17 @@
 'use client'
- // /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import { memo, useCallback, useState } from 'react'
 import { useDrop } from 'react-dnd'
 import { DnDFormGroupTypes } from '@app/types'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
+// import { DndProvider } from 'react-dnd'
+// import { HTML5Backend } from 'react-dnd-html5-backend'
 import update from 'immutability-helper'
+import './GridParts.scss';
 
-import './dndTest.scss'
 
+interface GridPartsProps {
+  children: React.ReactNode
+};
 interface IDragonDropGrid {
   children?: React.ReactNode
 };
@@ -21,46 +23,20 @@ interface IDragonDropGridContainer {
 
 interface IDragonDropGridCanvas {
   children?: React.ReactNode
-  width: number | string;
-  height: number | string;
+  width?: number | string;
+  height?: number | string;
 };
-const config = { col: 3, row: 3, width: '550px', height: '100%' };
-const GridStyle = () => {
-  return (<>
-    <style>
-      {`
-        .container {
-          width: 550px;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          margin: 3rem auto;
-        }
-        .grid-container {
-          display: GridCanvas; 
-          grid-template-columns: repeat(${config.col}, 1fr); 
-          grid-template-rows: repeat(${config.row}, 1fr);
-          grid-gap: 2;
-          grid-auto-flow: row dense;
-        }
-        .grid-row {
-          display: flex;
-          flex-direction: row;
-          width: 100%;
-          height: 100%;
-          grid-area: span 1/span 1;
-        }
-        .grid-item {
-          width: 100%;
-          height: 100%;
-          border: 1px solid #000;
-        }
-      `}
-    </style>
-  </>)
-}
+export const config = { col: 3, row: 3, width: '550px', height: '100%' };
 
-const GridCanvas = ({ children, width, height }: IDragonDropGridCanvas) => {
+export const GridParts = ({children}: GridPartsProps) => {
+    return (
+      <>
+        {children}
+      </>
+    );
+};
+
+export const GridCanvas = ({ children }: IDragonDropGridCanvas) => {
   return (<>
     <div className="container p-0 m-0">
       {children}
@@ -69,13 +45,13 @@ const GridCanvas = ({ children, width, height }: IDragonDropGridCanvas) => {
 }
 
 
-const GridRow = ({ children }: { children: React.ReactNode }) => (
+export const GridRow = ({ children }: { children: React.ReactNode }) => (
   <div className="hs-formbuilder-grid-row">{children}</div>
 );
 
-const GridItem = () => <div className="hs-formbuilder-grid-item"></div>;
+export const GridItem = () => <div className="hs-formbuilder-grid-item"></div>;
 
-const GridContainer = ({ children, col, row }: IDragonDropGridContainer) => {
+export const GridContainer = ({ children, col, row }: IDragonDropGridContainer) => {
   const gridColumns = Array.from({ length: col });
   const gridRows = Array.from({ length: row });
   const [dndFormGroups, setDnDFormGroups] = useState(DnDFormGroupTypes)
@@ -111,13 +87,30 @@ const GridContainer = ({ children, col, row }: IDragonDropGridContainer) => {
 
   const [, drop] = useDrop(() => ({ accept: DnDFormGroupTypes.DNDFORMGROUP }))
 
-  function toolsSubmitHandler(event: React.FormEvent) {
+  
+
+  return (
+    <>
+        <GridCanvas width={config.width} height={config.height}>
+      <div className="container pt-3" style={{maxWidth: '75%'}}>
+          <div className="hs-formbuilder-grid-container">
+            {children}
+          </div>
+      </div>
+        </GridCanvas>
+    </>
+  );
+};
+export default memo(GridContainer);
+
+  export const Tools = () => {
+    
+    function toolsSubmitHandler(event: React.FormEvent) {
     event.preventDefault();
     console.log('toolsSubmitHandler');
   }
 
-  return (
-    <>
+    return (
       <div className="hs-tools">
         <form onSubmit={void(0)} className="hs-tools-form">
 
@@ -152,38 +145,7 @@ const GridContainer = ({ children, col, row }: IDragonDropGridContainer) => {
           </div>
         </form>
       </div>
-      <div className="container pt-3" style={{maxWidth: '75%'}}>
-        <GridCanvas width={config.width} height={config.height}>
-          <div className="hs-formbuilder-grid-container">
-            {gridRows.map((_, rowIndex) => (
-              <GridRow key={`row-${rowIndex}`}>
-                {gridColumns.map((_, colIndex) => (
-                  <GridItem key={`col-${colIndex}`}
-                  id={`col-${colIndex}`}
-                  text={'temp placeholder'}
-                  moveDnDFormGroup={moveDnDFormGroup}
-                  findDnDFormGroup={findDnDFormGroup}
-                  />
-                ))}
-              </GridRow>
-            ))}
-          </div>
-        </GridCanvas>
-      </div>
-    </>
-  );
-};
+    )
+  }
 
-
-const DragonDropGrid = ({ children }: IDragonDropGrid) => {
-  return (<>
-    <GridCanvas width={config.width} height={config.height}>
-      <DndProvider backend={HTML5Backend}>
-        <GridContainer col={config.col} row={config.row} />
-      </DndProvider>
-    </GridCanvas>
-    {children}
-  </>)
-}
-export default DragonDropGrid
-
+ 

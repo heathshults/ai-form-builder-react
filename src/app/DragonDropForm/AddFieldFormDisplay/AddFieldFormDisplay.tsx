@@ -1,9 +1,9 @@
 // components/FormDisplay.tsx
 import React from 'react';
-import { useFormContext } from '@context/DragonDropFormFieldContext/DragonDropFormFieldContext';
+import { useDnDFormContext } from '@context/DragonDropFormFieldContext/DragonDropFormFieldContext';
 
 const FormDisplay: React.FC = () => {
-  const { fields } = useFormContext();
+  const { fields } = useDnDFormContext();
 
   return (
     <form>

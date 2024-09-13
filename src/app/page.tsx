@@ -1,5 +1,5 @@
-import FormBuilderPrompt from '@components/form-builder-prompt';
-import FormBuilderDisplay from '@components/FormBuilderDisplay';
+import FormBuilderPrompt from '@app/components/form-builder/form-builder-prompt';
+import FormBuilderDisplay from '@app/components/form-builder/FormBuilderDisplay';
 import { FormFieldsProvider } from '@context/FormFieldsContext/FormFieldsContext';
 import { FormProvider } from '@context/DragonDropFormFieldContext/DragonDropFormFieldContext';
 

@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 import * as React from 'react';
-import { useFormContext } from '@context/DragonDropFormFieldContext/DragonDropFormFieldContext';
+import { useDnDFormContext } from '@context/DragonDropFormFieldContext/DragonDropFormFieldContext';
 import { FormProvider } from '@context/DragonDropFormFieldContext/DragonDropFormFieldContext';
-import FormGrid from '@components/DragonDropFormGrid/DragonDropFormGrid';
-import AddFieldForm from '@components/AddFieldForm/AddFieldForm';
-import FormDisplay from '@components/DragonDropFormDisplay/DragonDropFormDisplay';
+import FormGrid from '@app/DragonDropForm/DragonDropFormGrid/DragonDropFormGrid';
+import AddFieldForm from '@app/DragonDropForm/AddFieldForm/AddFieldForm';
+import FormDisplay from '@app/DragonDropForm/AddFieldFormDisplay/AddFieldFormDisplay';
 import './DragonDropForm.scss';
 
 
@@ -14,7 +14,7 @@ interface DragonDropFormProps {
 };
 
 export const DragonDropForm = ({children}: DragonDropFormProps) => {
-    const { saveLayout } = useFormContext();
+    const { saveLayout } = useDnDFormContext();
 
     return (
       <FormProvider>

@@ -4,7 +4,7 @@ import type { FC } from 'react'
 import { memo, useCallback, useState } from 'react'
 import { useDrop } from 'react-dnd'
 
-import { Card } from './Card'
+import { DnDFormGroup } from './DNDFormGroup'
 import { ItemTypes } from './ItemTypes'
 
 const style = {
@@ -12,17 +12,17 @@ const style = {
 }
 
 export interface ContainerState {
-  cards: any[]
+  dndFormGroups: any[]
 }
 
 const ITEMS = [
   {
     id: 1,
-    text: 'Write a cool JS library',
+    text: 'Write JSy',
   },
   {
     id: 2,
-    text: 'Make it generic enough',
+    text: 'Make it',
   },
   {
     id: 3,
@@ -30,11 +30,11 @@ const ITEMS = [
   },
   {
     id: 4,
-    text: 'Create some examples',
+    text: 'Create some',
   },
   {
     id: 5,
-    text: 'Spam in Twitter and IRC to promote it',
+    text: 'promote it',
   },
   {
     id: 6,
@@ -47,51 +47,50 @@ const ITEMS = [
 ]
 
 export const Container: FC = memo(function Container() {
-  const [cards, setCards] = useState(ITEMS)
+  const [dndFormGroups, setDnDFormGroups] = useState(ITEMS)
 
-  const findCard = useCallback(
+  const findDnDFormGroup = useCallback(
     (id: string) => {
-      const card = cards.filter((c) => `${c.id}` === id)[0] as {
+      const dndFormGroup = dndFormGroups.filter((fg) => `${fg.id}` === id)[0] as {
         id: number
         text: string
       }
       return {
-        card,
-        index: cards.indexOf(card),
+        dndFormGroup,
+        index: dndFormGroups.indexOf(dndFormGroup),
       }
     },
-    [cards],
+    [dndFormGroups],
   )
 
-  const moveCard = useCallback(
+  const moveDnDFormGroup = useCallback(
     (id: string, atIndex: number) => {
-      const { card, index } = findCard(id)
-      setCards(
-        update(cards, {
+      const { dndFormGroup, index } = findDnDFormGroup(id)
+      setDnDFormGroups(
+        update(dndFormGroups, {
           $splice: [
             [index, 1],
-            [atIndex, 0, card],
+            [atIndex, 0, dndFormGroup],
           ],
         }),
       )
     },
-    [findCard, cards, setCards],
+    [findDnDFormGroup, dndFormGroups, setDnDFormGroups],
   )
 
-  const [, drop] = useDrop(() => ({ accept: ItemTypes.CARD }))
+  const [, drop] = useDrop(() => ({ accept: ItemTypes.DNDFORMGROUP }))
   return (
     <div ref={drop} style={style}>
-      {cards.map((card) => (
-        <Card
-          key={card.id}
-          id={`${card.id}`}
-          text={card.text}
-          moveCard={moveCard}
-          findCard={findCard}
+      {dndFormGroups.map((dndFormGroup) => (
+        <DnDFormGroup
+          key={dndFormGroup.id}
+          id={`${dndFormGroup.id}`}
+          text={dndFormGroup.text}
+          moveDnDFormGroup={moveDnDFormGroup}
+          findDnDFormGroup={findDnDFormGroup}
         />
       ))}
     </div>
   )
 })
-
-
+export default Container

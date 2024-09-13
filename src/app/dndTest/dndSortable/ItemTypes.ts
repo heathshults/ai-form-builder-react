@@ -1,3 +1,4 @@
+'use client'
 export const ItemTypes = {
-  CARD: 'card',
+  DNDFORMGROUP: 'formgroup',
 }

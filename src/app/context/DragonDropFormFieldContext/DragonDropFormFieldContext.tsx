@@ -53,10 +53,10 @@ export const FormProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   );
 };
 
-export const useFormContext = () => {
+export const useDnDFormContext = () => {
   const context = useContext(FormContext);
   if (!context) {
-    throw new Error('useFormContext must be used within a FormProvider');
+    throw new Error('useDnDFormContext must be used within a FormProvider');
   }
   return context;
 };

@@ -1,10 +1,10 @@
 // components/AddFieldForm.tsx
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { useFormContext } from '@context/DragonDropFormFieldContext/DragonDropFormFieldContext';
+import { useDnDFormContext } from '@context/DragonDropFormFieldContext/DragonDropFormFieldContext';
 
 const AddFieldForm: React.FC = () => {
-  const { addField } = useFormContext();
+  const { addField } = useDnDFormContext();
   const [type, setType] = useState('text');
   const [label, setLabel] = useState('');
 

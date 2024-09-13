@@ -5,18 +5,21 @@ import { useDrag, useDrop } from 'react-dnd'
 import { ItemTypes } from './ItemTypes'
 
 const style: CSSProperties = {
-  border: '1px dashed gray',
+  display: 'inline-block',
+  width: '38%',
+  border: '2px solid #252525',
   padding: '0.5rem 1rem',
   marginBottom: '.5rem',
-  backgroundColor: 'white',
+  backgroundColor:' var(--background-color)',
   cursor: 'move',
+  boxSizing: 'border-box',
 }
 
-export interface CardProps {
+export interface DnDFormGroupProps {
   id: string
   text: string
-  moveCard: (id: string, to: number) => void
-  findCard: (id: string) => { index: number }
+  moveDnDFormGroup: (id: string, to: number) => void
+  findDnDFormGroup: (id: string) => { index: number }
 }
 
 interface Item {
@@ -24,16 +27,16 @@ interface Item {
   originalIndex: number
 }
 
-export const Card: FC<CardProps> = memo(function Card({
+export const DnDFormGroup: FC<DnDFormGroupProps> = memo(function DnDFormGroup({
   id,
   text,
-  moveCard,
-  findCard,
+  moveDnDFormGroup,
+  findDnDFormGroup,
 }) {
-  const originalIndex = findCard(id).index
+  const originalIndex = findDnDFormGroup(id).index
   const [{ isDragging }, drag] = useDrag(
     () => ({
-      type: ItemTypes.CARD,
+      type: ItemTypes.DNDFORMGROUP,
       item: { id, originalIndex },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
@@ -42,24 +45,24 @@ export const Card: FC<CardProps> = memo(function Card({
         const { id: droppedId, originalIndex } = item
         const didDrop = monitor.didDrop()
         if (!didDrop) {
-          moveCard(droppedId, originalIndex)
+          moveDnDFormGroup(droppedId, originalIndex)
         }
       },
     }),
-    [id, originalIndex, moveCard],
+    [id, originalIndex, moveDnDFormGroup],
   )
 
   const [, drop] = useDrop(
     () => ({
-      accept: ItemTypes.CARD,
+      accept: ItemTypes.DNDFORMGROUP,
       hover({ id: draggedId }: Item) {
         if (draggedId !== id) {
-          const { index: overIndex } = findCard(id)
-          moveCard(draggedId, overIndex)
+          const { index: overIndex } = findDnDFormGroup(id)
+          moveDnDFormGroup(draggedId, overIndex)
         }
       },
     }),
-    [findCard, moveCard],
+    [findDnDFormGroup, moveDnDFormGroup],
   )
 
   const opacity = isDragging ? 0 : 1

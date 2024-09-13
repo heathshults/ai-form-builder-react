@@ -3,10 +3,10 @@
 
 import * as React from 'react';
 import { Draggable, DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { useFormContext } from '@context/DragonDropFormFieldContext/DragonDropFormFieldContext';
+import { useDnDFormContext } from '@context/DragonDropFormFieldContext/DragonDropFormFieldContext';
 
 const FormGrid: React.FC = () => {
-  const { fields, updateField, removeField } = useFormContext();
+  const { fields, updateField, removeField } = useDnDFormContext();
 
   const onDragEnd = (result: any) => {
     if (!result.destination) return;

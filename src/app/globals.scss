@@ -5,22 +5,24 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background-color: #151718;
+  --text-color: #eeeeee;
+  --background: #151718;
+  --foreground: #eeeeee;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #151718;
+    --foreground: #eeeeee;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
+// body {
+//   color: var(--foreground);
+//   background: var(--background);
+//   font-family: Arial, Helvetica, sans-serif;
+// }
 
 @layer utilities {
   .text-balance {
@@ -28,7 +30,8 @@ body {
   }
 }
 
-.hs-form-builder-container {  display: grid;
+.hs-form-builder-container {  
+  display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 300px;
   gap: 0px 0px;

@@ -3,7 +3,7 @@ import { Draggable } from "./draggable";
 import update from "immutability-helper";
 
 export function DropZone({ dndCharacterData }) {
-  //grabbing api data and rendering it with `renderDndCharacterCards`
+  //grabbing api data and rendering it with `renderDndCharacterDnDFormGroups`
   const [dndCharacters, setDndCharacters] = useState(dndCharacterData);
 
   //a memoized function that uses js `immutability-helper` & `splice` to update the
@@ -19,7 +19,7 @@ export function DropZone({ dndCharacterData }) {
     );
   }, []);
 
-  const renderDndCharacterCards = () =>
+  const renderDndCharacterDnDFormGroups = () =>
     dndCharacters.map((dndCharacter, index) => (
       <Draggable
         index={index}
@@ -42,7 +42,7 @@ export function DropZone({ dndCharacterData }) {
       }}
     >
       <h2>Drop Zone</h2>
-      {renderDndCharacterCards()}
+      {renderDndCharacterDnDFormGroups()}
     </div>
   );
 }

@@ -20,7 +20,7 @@ export const FormBuilderPrompt = ({ }: FormBuilderPromptProps) => {
   };
 
 
-
+ 
     function savePrompt() {
       !isSaveButtonActive ? setIsSaveButtonActive(true) : void(0);
     }

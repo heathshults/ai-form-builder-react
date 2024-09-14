@@ -1,77 +1,98 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 import * as React from 'react';
-import { memo, useCallback, useState } from 'react'
+import { memo, useCallback, useState, CSSProperties } from 'react'
 import { useDrop } from 'react-dnd'
 import { DnDFormGroupTypes } from '@app/types'
 // import { DndProvider } from 'react-dnd'
 // import { HTML5Backend } from 'react-dnd-html5-backend'
 import update from 'immutability-helper'
+import { useConfigContext } from '@context/ConfigContext';
+import { addToLoaclStorage } from '@api/fetcher';
 import './GridParts.scss';
 
+// export const config = { col: 1, row: 4, width: '100%', height: '100%' };
 
-interface GridPartsProps {
-  children: React.ReactNode
-};
-interface IDragonDropGrid {
-  children?: React.ReactNode
-};
-interface IDragonDropGridContainer {
-  children?: React.ReactNode
-  col: number;
-  row: number;
-};
 
-interface IDragonDropGridCanvas {
-  children?: React.ReactNode
-  width?: number | string;
-  height?: number | string;
-};
-export const config = { col: 1, row: 4, width: '100%', height: '100%' };
+export class Config extends React.Component {
+  config = useConfigContext();
+  col: number
+  row: number
+  width: string 
+  height: string
 
-const css = {
-  hsFormbuilderGrid: {
-      /*display: 'grid',
-      gridTemplateColumns: `repeat(${config.col}, 1fr)`,
-      gridTemplateRows: `repeat(${config.row}, 1fr)`,
-      gridGap: '1rem', */
-      display: 'flex',
-      marginTop: '1rem', 
-      color: 'var(--text-color)',
-      backgroundColor: 'var(--background-color)',
-      maxWidth: '100%',
-      height: '100vh',
-      height: '100%',
-    },
-      hsFormbuilderGridRow: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'left',
-        alignItems: 'center',
-        padding: 0,
-        margin: 0,
-        width: '100%',
-        boxSizing: 'border-box',
-      },
-      hsFormbuilderGridItem: {
-        display: 'inline-flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '1rem',
-        border: '1px solid #ccc',
-        backgroundColor: '#191919',
-        boxSizing: 'border-box',
-      },
-        hsFormbuilderGridCanvas: {
-          padding: '2rem',
-          margin: 'auto',
-        },
-      hsFormbuilderGridFormgroup: {
-        color: 'var(--text-color)',
-      }
-   
+  constructor(props) {
+    super(props);
+    
+    this.col = this.config.col;
+    this.row = this.config.row;
+    this.width = this.config.width; 
+    this.height = this.config.height;
+
+    this.state = {
+      config: {...this.config},
+    };
+    console.log('config', this.config);
   }
+
+  setConfig(newConfig) {
+    this.setState({config: newConfig});
+  }
+
+ render() {
+    return(<></>)
+  }
+}
+const {col, row, width, height} = Config;
+export const css = {
+  hsFormbuilderGrid: {
+    display: 'grid',
+    gridTemplateColumns: `repeat(${col}, 1fr)`,
+    gridTemplateRows: `repeat(${row}, 1fr)`,
+    gridGap: '1rem',
+    marginTop: '1rem',
+    color: 'var(--text-color)',
+    backgroundColor: 'var(--background-color)',
+    maxWidth: '100%',
+    height: '100vh',
+    height: '100%',
+  },
+  hsFormbuilderGridRow: {
+    flex: '1 1 auto',
+    flexDirection: 'row',
+    justifyContent: 'left',
+    alignItems: 'center',
+    gridRow: 'auto',
+    padding: 0,
+    margin: 0,
+    width: '100%',
+    boxSizing: 'border-box',
+  },
+  hsFormbuilderGridItem: {
+    display: 'inline-flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gridArea: 'auto',
+    padding: '1rem',
+    margin: '.25rem',
+    border: '1px solid #ccc',
+    backgroundColor: '#191919',
+    minWidth: '150px',
+    boxSizing: 'border-box',
+  },
+  'hsFormbuilderGridItem:lastChild)': {
+    marginBottom: 0,
+  },
+  hsFormbuilderGridCanvas: {
+    padding: '2rem',
+    margin: 'auto',
+  },
+  hsFormbuilderGridFormgroup: {
+    color: 'var(--text-color)',
+  }
+
+}
 
 
 export const GridParts = ({ children }: GridPartsProps) => {
@@ -84,7 +105,7 @@ export const GridParts = ({ children }: GridPartsProps) => {
 
 export const GridCanvas = ({ children }: IDragonDropGridCanvas) => {
   return (<>
-    <div className="container hs-formbuilder-grid-canvas p-0 m-0" style={css.hsFormbuilderGridCanvas}> 
+    <div className="container hs-formbuilder-grid-canvas p-0 m-0" style={css.hsFormbuilderGridCanvas}>
       {children}
     </div>
   </>)
@@ -137,8 +158,8 @@ export const GridContainer = ({ children, col, row }: IDragonDropGridContainer) 
 
   return (
     <>
-      
-      <GridCanvas width={config.width} height={config.height} >
+      <Tools />
+      <GridCanvas width={width} height={height} >
         <div className="hs-formbuilder-grid pt-3" style={css.hsFormbuilderGrid}>
           {children}
         </div>
@@ -148,43 +169,106 @@ export const GridContainer = ({ children, col, row }: IDragonDropGridContainer) 
 };
 export default GridContainer;
 
-export const Tools = () => {
+export interface ITools {
+  cols?: number;
+  rows?: number;
+  width?: number;
+  height?: number;
+}
 
-  function toolsSubmitHandler(event: React.FormEvent) {
-    event.preventDefault();
-    console.log('toolsSubmitHandler');
+export const Tools = ({cols, rows, width, height}: ITools): React.FC => {
+  const configCtx = useConfigContext();
+
+  const toolsSubmitHandler = (event: React.FormEvent) => {
+      let form
+      event.preventDefault();
+      event.target ? form = event.target as HTMLFormElement : void (0);
+      form ? console.log(form.elements!) : void (0);
+  
+      const config = {
+        col: form.elements[0].value,
+        row: form.elements[1].value,
+        width: form.elements[2].value,
+        height: form.elements[3].value,
+      }
+     
+      configCtx.setConfigContext(config);
+      localStorage.setItem('config', JSON.stringify(config));
+  
+      console.log(configCtx);
+      console.log(form.elements);
+
+
+
   }
 
   return (
     <div className="hs-tools">
-      <form onSubmit={void (0)} className="hs-tools-form">
+      { console.log('config', JSON.stringify(configCtx)) }
+      <form onSubmit={toolsSubmitHandler} className="hs-tools-form">
 
-        <div class="hs-tool-grid-container">
-          <div class="hs-tool-grid-columns">
+        <div className="hs-tool-grid-container">
+          <div className="hs-tool-grid-columns">
             <div className="form-group align-items-center text-center px-3 justify-content-center">
-              <label htmlFor="chooseColumns" classNamew="form-label">Columns</label>
-              <input id="chooseColumns" minLength="4" maxLength="8" size="15" className="form-control" type="number" placeholder="3" />
+              <label htmlFor="chooseColumns" className="form-label">Columns</label>
+              <input 
+                id="chooseColumns" 
+                minLength="4" 
+                maxLength="8" 
+                size="15" 
+                className="form-control" 
+                type="number" 
+                placeholder="3" 
+                defaultValue={configCtx.col}
+              />
             </div>
           </div>
-          <div class="hs-tool-grid-rows">
+          <div className="hs-tool-grid-rows">
             <div className="form-group align-items-center text-center px-3 justify-content-center">
-              <label htmlFor="chooseRows" classNamew="form-label">Rows</label>
-              <input id="chooseRows" minLength="4" maxLength="8" size="15" className="form-control" type="number" placeholder="3" />
+              <label htmlFor="chooseRows" className="form-label">Rows</label>
+              <input 
+                id="chooseRows" 
+                minLength="4" 
+                maxLength="8" 
+                size="15" 
+                className="form-control" 
+                type="number" placeholder="3" 
+                defaultValue={configCtx.row}
+                
+              />
             </div>
           </div>
-          <div class="hs-tool-grid-width">
+          <div className="hs-tool-grid-width">
             <div className="form-group align-items-center px-3 justify-content-center text-center">
-              <label htmlFor="width" classNamew="form-label">Width</label>
-              <input id="width" type="text" minLength="1" maxLength="8" size="15" className="form-control" placeholder="100%" />
+              <label htmlFor="width" className="form-label">Width</label>
+              <input 
+                id="width" 
+                type="text" 
+                minLength="1" 
+                maxLength="8" 
+                size="15" 
+                className="form-control" 
+                placeholder="100%"
+                defaultValue={configCtx.width}
+              />
             </div>
           </div>
-          <div class="hs-tool-grid-height">
+          <div className="hs-tool-grid-height">
             <div className="form-group align-items-center text-center px-3 justify-content-center">
-              <label htmlFor="height" classNamew="form-label">Height</label>
-              <input id="height" type="text" minLength="1" maxLength="8" size="15" className="form-control" placeholder="100%" />
+              <label htmlFor="height" className="form-label">Height</label>
+              <input 
+                id="height" 
+                type="text" 
+                minLength="1" 
+                maxLength="8" 
+                size="15" 
+                className="form-control" 
+                placeholder="100%"
+                defaultValue={configCtx.height}
+              />
             </div>
           </div>
-          <div class="hs-tool-grid-button px-3 justify-content-center d-inline-flex align-items-end">
+          <div className="hs-tool-grid-button px-3 justify-content-center d-inline-flex align-items-end">
             <button type="submit" className="btn btn-primary">Save</button>
           </div>
         </div>

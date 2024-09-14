@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-constant-binary-expression */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use server";
@@ -50,6 +51,25 @@ export async function fetchData(path: string) {
       ${error}`,
     };
   }
+}
+
+export async function addToLoaclStorage(name: string, data: any) {
+
+ 
+  if (typeof data === 'object' || typeof data === 'array') {
+    localStorage.setItem(key, JSON.stringify(data))
+  } else {
+    localStorage.setItem(key, data)
+  }
+  return NextResponse.json({ data: { message: "Data saved" } });
+
+    if (response.ok) {
+      return { success: true };
+    } else {
+      return { success: false };
+    }
+  
+
 }
 
 export async function streamer(path: string) {

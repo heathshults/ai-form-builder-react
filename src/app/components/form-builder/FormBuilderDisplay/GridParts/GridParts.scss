@@ -1,0 +1,63 @@
+
+.hs-tools {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .875rem 1.25rem;
+  background-color: #030303;
+  color: rgb(232, 232, 232);
+  border: 1px solid #202224;
+  box-sizing: border-box;
+  cursor: move;
+  width: 100%;
+  .hs-tools-form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    input[class="form-control"] {
+      width: 70px;
+      margin: auto;
+    }
+  }
+}
+
+.hs-tool-grid-container {  
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  row-gap: 3;
+  col-gap: 3;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "hs-tool-grid-columns hs-tool-grid-rows hs-tool-grid-width hs-tool-grid-height hs-tool-grid-button";
+  font-size: .875rem;
+  margin: auto;
+  }
+
+.hs-tool-grid-columns { 
+  grid-area: hs-tool-grid-columns;
+  text-align: center;
+}
+.hs-tool-grid-rows {
+  grid-area: hs-tool-grid-rows;
+  text-align: center;
+}
+
+.hs-tool-grid-width {
+  grid-area: hs-tool-grid-width;
+  text-align: center;
+}
+
+.hs-tool-grid-height {
+  grid-area: hs-tool-grid-height;
+  text-align: center;
+}
+
+.hs-tool-grid-button {
+  grid-area: hs-tool-grid-button;
+  align-items: center;
+}
+
+
+

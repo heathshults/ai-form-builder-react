@@ -12,3 +12,22 @@ export interface IFieldGroups {
 export const DnDFormGroupTypes = {
   DNDFORMGROUP: 'formgroup',
 }
+
+
+export interface GridPartsProps {
+  children: React.ReactNode
+};
+export interface IDragonDropGrid {
+  children?: React.ReactNode
+};
+export interface IDragonDropGridContainer {
+  children?: React.ReactNode
+  col: number;
+  row: number;
+};
+
+export interface IDragonDropGridCanvas {
+  children?: React.ReactNode
+  width?: number | string;
+  height?: number | string;
+};

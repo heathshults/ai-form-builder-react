@@ -1,7 +1,9 @@
 'use client'
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 interface Field {
+  id: string;
   type: string;
   name: string;
   label: string;
@@ -29,6 +31,7 @@ export const FormFieldsProvider: React.FC<{ children: ReactNode }> = ({ children
 
   const setFields = (fieldsString: string) => {
     const fieldsArray = fieldsString.split(',').map((fieldName) => ({
+      id: uuidv4(),
       type: 'text',
       name: fieldName.trim(),
       label: fieldName.trim(),

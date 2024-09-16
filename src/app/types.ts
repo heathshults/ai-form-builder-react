@@ -1,4 +1,4 @@
-export interface IFieldGroups {
+export interface ICompoundFields {
   location?: {
     address?: { type: string; label: string };
     address2?: { type: string; label: string };
@@ -11,6 +11,10 @@ export interface IFieldGroups {
 
 export const DnDFormGroupTypes = {
   DNDFORMGROUP: 'formgroup',
+}
+
+export interface IFieldTypes {
+  type: 'text' | 'number' | 'email' | 'tel' | 'textarea' | 'select' | 'checkbox' | 'radio' | 'compound';
 }
 
 

@@ -16,6 +16,7 @@ const style: CSSProperties = {
 }
 
 export interface DnDFormGroupProps {
+  children?: React.ReactNode
   id: string
   text: string
   moveDnDFormGroup: (id: string, to: number) => void
@@ -32,6 +33,7 @@ export const DnDFormGroup: FC<DnDFormGroupProps> = memo(function DnDFormGroup({
   text,
   moveDnDFormGroup,
   findDnDFormGroup,
+  children,
 }) {
   const originalIndex = findDnDFormGroup(id).index
   const [{ isDragging }, drag] = useDrag(
@@ -69,6 +71,7 @@ export const DnDFormGroup: FC<DnDFormGroupProps> = memo(function DnDFormGroup({
   return (
     <div ref={(node) => drag(drop(node))} style={{ ...style, opacity }}>
       {text}
+      {children}
     </div>
   )
 })

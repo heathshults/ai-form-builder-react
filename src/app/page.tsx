@@ -4,6 +4,7 @@ import { FormFieldsProvider } from '@context/FormFieldsContext/FormFieldsContext
 import { FormProvider } from '@context/DragonDropFormFieldContext/DragonDropFormFieldContext';
 import { ConfigProvider } from '@context/ConfigContext';
 
+
 import './globals.scss';
 
 export default function Home() {
@@ -11,16 +12,18 @@ export default function Home() {
     <>
       <FormProvider>
         <FormFieldsProvider>
-          <ConfigProvider>
-            <div className="hs-form-builder-container">
-              <div className="hs-form-display">
-                <FormBuilderDisplay />
+  
+            <ConfigProvider>
+              <div className="hs-form-builder-container">
+                <div className="hs-form-display">
+                  <FormBuilderDisplay ></FormBuilderDisplay>
+                </div>
+                <div className="hs-form-builder-prompt">
+                  <FormBuilderPrompt />
+                </div>
               </div>
-              <div className="hs-form-builder-prompt">
-                <FormBuilderPrompt />
-              </div>
-            </div>
-          </ConfigProvider>
+            </ConfigProvider>
+  
         </FormFieldsProvider>
       </FormProvider>
     </>

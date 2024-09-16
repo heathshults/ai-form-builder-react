@@ -39,7 +39,7 @@ export const DnDFormGroup: FC<DnDFormGroupProps> = memo(function DnDFormGroup({
   const originalIndex = findDnDFormGroup(id).index
   const [{ isDragging }, drag] = useDrag(
     () => ({
-      type: IDnDFormGroupTypes.DNDFORMGROUP,
+      type: DnDFormGroupTypes.DNDFORMGROUP,
       item: { id, originalIndex },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
@@ -68,7 +68,7 @@ export const DnDFormGroup: FC<DnDFormGroupProps> = memo(function DnDFormGroup({
     [findDnDFormGroup, moveDnDFormGroup],
   )
 
-  const opacity = isDragging ? 0 : 1
+  const opacity = isDragging ? 0.5 : 1
   return (
     <div ref={(node) => drag(drop(node))} style={{ ...style, opacity }}>
       {children}

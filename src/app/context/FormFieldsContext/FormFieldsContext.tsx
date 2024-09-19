@@ -35,6 +35,8 @@ export const FormFieldsProvider: React.FC<{ children: ReactNode }> = ({ children
       type: 'text',
       name: fieldName.trim(),
       label: fieldName.trim(),
+      required:true,
+      
     }));
     setFieldsState(fieldsArray);
   };

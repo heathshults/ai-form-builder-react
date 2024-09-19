@@ -37,7 +37,7 @@ export const EventEmitter: {
     delete this.events[eventName]
   },
 }
-
+export default EventEmitter;
 /**
  * dispatch and unsubscribe
  * 

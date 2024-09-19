@@ -23,11 +23,11 @@ export class Config extends React.Component {
 
   constructor(props) {
     super(props);
-    
-    this.col = this.config.col;
-    this.row = this.config.row;
-    this.width = this.config.width; 
-    this.height = this.config.height;
+    console.log('config Grid Parts', this.config[0]);
+    this.col = this.config[0].col;
+    this.row = this.config[0].row;
+    this.width = this.config[0].width; 
+    this.height = this.config[0].height;
 
     this.state = {
       config: {...this.config},
@@ -178,33 +178,38 @@ export interface ITools {
 
 export const Tools = ({cols, rows, width, height}: ITools): React.FC => {
   const configCtx = useConfigContext();
+  console.log('tools configCtx', configCtx)
+  const [config, setConfig] = React.useState(configCtx);
+  const window: Window & typeof globalThis = globalThis; 
+  const store =React.useRef(null)
 
-  const toolsSubmitHandler = (event: React.FormEvent) => {
+  React.useEffect(()=>{
+   store.current = window.localStorage; 
+  }, [window.localStorage])
+  const toolsSubmitHandler = React.useCallback((event: React.FormEvent) => {
       let form
       event.preventDefault();
       event.target ? form = event.target as HTMLFormElement : void (0);
       form ? console.log(form.elements!) : void (0);
   
-      const config = {
+      const settings = {
         col: form.elements[0].value,
         row: form.elements[1].value,
         width: form.elements[2].value,
         height: form.elements[3].value,
       }
      
-      configCtx.setConfigContext(config);
-      localStorage.setItem('config', JSON.stringify(config));
+      configCtx.setConfigContext(settings);
+      store.current.removeItem('config');
+      store.current.setItem('config', JSON.stringify(settings));
   
       console.log(configCtx);
       console.log(form.elements);
-
-
-
-  }
+  }, [store, configCtx]);
 
   return (
     <div className="hs-tools">
-      { console.log('config', JSON.stringify(configCtx)) }
+      { console.log('config', JSON.stringify(config)) }
       <form onSubmit={toolsSubmitHandler} className="hs-tools-form">
 
         <div className="hs-tool-grid-container">
@@ -219,7 +224,7 @@ export const Tools = ({cols, rows, width, height}: ITools): React.FC => {
                 className="form-control" 
                 type="number" 
                 placeholder="3" 
-                defaultValue={configCtx.col}
+                defaultValue={config.col}
               />
             </div>
           </div>
@@ -233,8 +238,7 @@ export const Tools = ({cols, rows, width, height}: ITools): React.FC => {
                 size="15" 
                 className="form-control" 
                 type="number" placeholder="3" 
-                defaultValue={configCtx.row}
-                
+                defaultValue={config.row}
               />
             </div>
           </div>
@@ -249,7 +253,9 @@ export const Tools = ({cols, rows, width, height}: ITools): React.FC => {
                 size="15" 
                 className="form-control" 
                 placeholder="100%"
-                defaultValue={configCtx.width}
+                defaultValue={config.width}
+                
+                
               />
             </div>
           </div>
@@ -264,7 +270,7 @@ export const Tools = ({cols, rows, width, height}: ITools): React.FC => {
                 size="15" 
                 className="form-control" 
                 placeholder="100%"
-                defaultValue={configCtx.height}
+                defaultValue={config.height}
               />
             </div>
           </div>

@@ -6,7 +6,7 @@ export interface ICompoundFields {
     state?: { type: string; options: string[]; label: string };
     zip?: { type: string; label: string };
   };
-  name?: string[];
+  name?: ['firstName', 'middleName', 'lastName'];
 }
 
 export const DnDFormGroupTypes = {

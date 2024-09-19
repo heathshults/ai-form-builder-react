@@ -85,18 +85,6 @@ export const FormBuilderDisplay: React.FC = memo(function FormBuilderDisplay({ c
 
 
 
-    // if (!dndFormGroups.length) {
-    //   return (<>
-    //     <div className="form-grid-item">
-    //       <div className="form-group">
-    //         <p>To get started enter field names in the prompt below and click &quot;Send&quot;</p>
-    //       </div>
-    //     </div>
-
-    //   </>
-    //   );
-    // }
-
 
 
     return (

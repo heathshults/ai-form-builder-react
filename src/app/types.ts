@@ -35,3 +35,24 @@ export interface IDragonDropGridCanvas {
   width?: number | string;
   height?: number | string;
 };
+
+export interface FormFieldProps {
+  type: string;
+  id: string;
+  name: string;
+  label: string;
+  labelClass?: string;
+  inputClass?: string;
+  placeholder?: string;
+  options?: string[]; // For select fields
+  required?: boolean;
+  disabled?: boolean;
+  readOnly?: boolean;
+  value?: string | number;
+  validationRegx?: RegExp;
+  errorMessage?: string;
+  style: React.CSSProperties;
+  textareaHeight: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  onClick?: (string) => void;
+}

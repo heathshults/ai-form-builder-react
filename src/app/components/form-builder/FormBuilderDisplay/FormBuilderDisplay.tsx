@@ -12,7 +12,7 @@ import { useConfigContext } from '@context/ConfigContext';
 import { useDrop } from 'react-dnd';
 import { DnDFormGroupTypes } from '@app/types';
 import { DnDFormGroup } from '@app/components/form-builder/FormBuilderDisplay/DNDFormGroup';
-
+import GetFormField from '@app/components/form-builder/FormBuilderDisplay/GetFormField/GetFormField';
 import './FormBuilderDisplay.scss';
 
 interface FormBuilderDisplayProps {
@@ -94,6 +94,8 @@ export const FormBuilderDisplay: React.FC = memo(function FormBuilderDisplay({ c
             <div className="">
               <div className="p-3">
                 <p>To get started enter field names in the prompt below and click &quot;Send&quot;</p>
+              
+              <GetFormField type="text" label="Test Label"/>
               </div>
             </div>
           ) : (

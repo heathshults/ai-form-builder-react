@@ -13,6 +13,9 @@ import { useDrop } from 'react-dnd';
 import { DnDFormGroupTypes } from '@app/types';
 import { DnDFormGroup } from '@app/components/form-builder/FormBuilderDisplay/DNDFormGroup';
 import GetFormField from '@app/components/form-builder/FormBuilderDisplay/GetFormField/GetFormField';
+import FormFieldMenu from '@app/components/form-builder/FormBuilderDisplay/FormFieldMenu/FormFieldMenu';
+import { objectKeysAreValid } from '@app/utils/validateObjectKeys';
+import { formFieldPropsArray } from '@app/components/form-builder/FormBuilderDisplay/form-field-properties';
 import './FormBuilderDisplay.scss';
 
 interface FormBuilderDisplayProps {
@@ -26,11 +29,16 @@ export const FormBuilderDisplay: React.FC = memo(function FormBuilderDisplay({ c
   const config = useConfigContext();
   const { col, row, width, height } = config;
   const { fields } = useFormFields();
-  
+  const [ show, setShow ] = useState(false);
+  const [ errorMessage, setErrMessage ] = useState('');
+
+
+
   const FormFields = ({ newFields }: IFormFields) => {
+    console.log('check keys', objectKeysAreValid(newFields, formFieldPropsArray));
     const [ dndFormGroups, setDnDFormGroups ] = useState(newFields)
-    console.log('dndFormGroups', dndFormGroups);
-    
+   
+
     // Grouping the fields so we can put x items per each row.
     const groupedFields = dndFormGroups.reduce((newFieldsArray, item) => {
       if (newFieldsArray[ newFieldsArray.length - 1 ].length >= config.col) {
@@ -43,30 +51,27 @@ export const FormBuilderDisplay: React.FC = memo(function FormBuilderDisplay({ c
       [ [] ]
     );
 
-    groupedFields ? console.log('newFields', groupedFields) : console.log('newFields', 'no fields');
+
 
     // ====== Drag and Drop =============================================//
     const findDnDFormGroup = useCallback(
       (id: string) => {
-        console.log('findDnDFormGroup-id', id);
-        console.log('findDnDFormGroup - dndFormGroups',dndFormGroups);
-        // if (!dndFormGroups) return;
+        if (!dndFormGroups) return;
         const dndFormGroup = dndFormGroups.filter((fg) => `${fg.id}` === id)[ 0 ] as {
           id: number
           label: string
         }
-        console.log('dndFormGroup', dndFormGroup);
+        
         return {
           dndFormGroup,
           index: dndFormGroups.indexOf(dndFormGroup),
         }
       },
-      [dndFormGroups],
+      [ dndFormGroups ],
     )
 
     const moveDnDFormGroup = useCallback(
       (id: string, atIndex: number) => {
-        console.log('moveDnDFormGroup-id', id);
         const { dndFormGroup, index } = findDnDFormGroup(id)
         setDnDFormGroups(
           update(dndFormGroups, {
@@ -77,66 +82,71 @@ export const FormBuilderDisplay: React.FC = memo(function FormBuilderDisplay({ c
           }),
         )
       },
-      [dndFormGroups, findDnDFormGroup]
+      [ dndFormGroups, findDnDFormGroup ]
     )
 
     const [ , drop ] = useDrop(() => ({ accept: DnDFormGroupTypes.DNDFORMGROUP }))
 
 
-
-
-
-
     return (
-      <DndProvider backend={HTML5Backend}>
-        <GridContainer>
-          {!dndFormGroups.length ? (
-            <div className="">
-              <div className="p-3">
-                <p>To get started enter field names in the prompt below and click &quot;Send&quot;</p>
-              
-              <GetFormField type="text" label="Test Label"/>
-              </div>
-            </div>
-          ) : (
-            <div ref={drop}>
-              {groupedFields.map((group, rowIndex) => (
-                <div key={`row-${rowIndex}`} className="hs-formbuilder-grid-row" style={css.hsFormbuilderGridRow}>
-                  {console.log('group', group)}
-                  {group.map((item, colIndex) => (
-                    item ? (
-                      <DnDFormGroup 
-                        id={item.id}
-                        key={`col-${rowIndex}-${colIndex}`} 
-                        className="hs-formbuilder-grid-item" 
-                        style={css.hsFormbuilderGridItem}
-                        type={DnDFormGroupTypes.DNDFORMGROUP}
-                        moveDnDFormGroup={moveDnDFormGroup}  
-                        findDnDFormGroup={findDnDFormGroup}
-                      >
-                        {console.log('item', item.name)}
-                        <div item={item.id} className="form-group hs-formbuilder-grid-formgroup">
-                          <label htmlFor={item.name} className="text-capitalize">{item.label}</label>
-                          <input id={item.name} type={item.type} className="form-control" name={item.name} placeholder={item.name} />
-                        </div>
-                      </DnDFormGroup>
-                    ) : null
-                  ))}
+      <>
+        <DndProvider backend={HTML5Backend}>
+          <GridContainer>
+            {!dndFormGroups.length ? (
+              <div className="">
+                <div className="p-3">
+                  <p>To get started enter field names in the prompt below and click &quot;Send&quot;</p>
+
+                  <GetFormField type="text" label="Test Label" />
                 </div>
-              ))}
-            </div>
-          )}
-        </GridContainer>
-      </DndProvider>
+              </div>
+            ) : (
+              <div ref={drop}>
+                {groupedFields.map((group, rowIndex) => (
+                  <div key={`row-${rowIndex}`} className="hs-formbuilder-grid-row" style={css.hsFormbuilderGridRow}>
+                    {group.map((item, colIndex) => (
+                      item ? (
+                        <div className='hs-formbuilder-grid-formgroup' key={`col-${rowIndex}-${colIndex}`}>
+                        <DnDFormGroup
+                          id={item.id}
+                          key={`col-${rowIndex}-${colIndex}`}
+                          className="hs-formbuilder-grid-item"
+                          style={css.hsFormbuilderGridItem}
+                          type={DnDFormGroupTypes.DNDFORMGROUP}
+                          moveDnDFormGroup={moveDnDFormGroup}
+                          findDnDFormGroup={findDnDFormGroup}
+                        >
+                          <div item={item.id} className="hs-formbuilder-grid-formgroup">
+
+
+                            {/* <FormFieldMenu/> */}
+                            <GetFormField
+                              type={item.type}
+                              label={item.label}
+                              placeholder={item.placeholder}
+                              required={item.required}
+                              errorMessage={item.errorMessage}
+                              onclick={item.onclick}
+                            />
+                            {/* <input id={item.name} type={item.type} className="form-control" name={item.name} placeholder={item.name} /> 
+                            *<label htmlFor={item.name} className="text-capitalize">{item.label}</label> */}
+                          </div>
+                        </DnDFormGroup>
+                        </div>
+                      ) : null
+                    ))}
+                  </div>
+                ))}
+              </div>
+            )}
+          </GridContainer>
+        </DndProvider>
+      </>
+
     );
   }
-// ====================================================================== //
+  // ====================================================================== //
 
-
-
-
-  console.log('fields', fields);
-  console.log('fields', typeof fields);
 
   return (
     <>
@@ -153,34 +163,34 @@ export const FormBuilderDisplay: React.FC = memo(function FormBuilderDisplay({ c
 export default FormBuilderDisplay
 
 
-  //   groupedFields.map(field => (
-  //   <div key={field.name} className="form-grid-item">
-  //     <div className="form-group">
-  //       <label htmlFor={field.name} className="text-capitalize">{field.label}</label>
-  //       <input id={field.name} type={field.type} className="form-control" name={field.name} placeholder={field.name}/>
-  //     </div>
-  //   </div>
-  // ));
+//   groupedFields.map(field => (
+//   <div key={field.name} className="form-grid-item">
+//     <div className="form-group">
+//       <label htmlFor={field.name} className="text-capitalize">{field.label}</label>
+//       <input id={field.name} type={field.type} className="form-control" name={field.name} placeholder={field.name}/>
+//     </div>
+//   </div>
+// ));
 
-  /* {groupedFields.map((group, rowIndex) => (
-      <div key={`row-${rowIndex}`} className="hs-formbuilder-grid-row" style={css.hsFormbuilderGridRow}>
+/* {groupedFields.map((group, rowIndex) => (
+    <div key={`row-${rowIndex}`} className="hs-formbuilder-grid-row" style={css.hsFormbuilderGridRow}>
 
-        {group.map((item, colIndex) => (
-          <div 
-            id={`col-${rowIndex}-${colIndex}`}
-            key={`col-${rowIndex}-${colIndex}`} 
-            className="hs-formbuilder-grid-item" 
-            style={css.hsFormbuilderGridItem}
-            moveDnDFormGroup={moveDnDFormGroup}
-            findDnDFormGroup={findDnDFormGroup}
-          >
-            <div className="form-group hs-formbuilder-grid-formgroup">
-              <label htmlFor={item.name} className="text-capitalize">{item.label}</label>
-              <input id={item.name} type={item.type} className="form-control" name={item.name} placeholder={item.name} />
-            </div>
+      {group.map((item, colIndex) => (
+        <div 
+          id={`col-${rowIndex}-${colIndex}`}
+          key={`col-${rowIndex}-${colIndex}`} 
+          className="hs-formbuilder-grid-item" 
+          style={css.hsFormbuilderGridItem}
+          moveDnDFormGroup={moveDnDFormGroup}
+          findDnDFormGroup={findDnDFormGroup}
+        >
+          <div className="form-group hs-formbuilder-grid-formgroup">
+            <label htmlFor={item.name} className="text-capitalize">{item.label}</label>
+            <input id={item.name} type={item.type} className="form-control" name={item.name} placeholder={item.name} />
           </div>
-        ))}
-      </div>
-      
-    ))}
-      */
+        </div>
+      ))}
+    </div>
+    
+  ))}
+    */

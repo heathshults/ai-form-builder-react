@@ -1,5 +1,5 @@
 export enum EventType {
-  REFETCH_CHARACTERS = 'refetchComment',
+  ERROR_MESSAGE = 'errorMessage',
 }
 
 /**
@@ -41,11 +41,11 @@ export default EventEmitter;
 /**
  * dispatch and unsubscribe
  * 
- * eventEmitter.dispatch(EventType.REFETCH_CHARACTERS, uniqueSuffix)
- * eventEmitter.unsubscribe(EventType.REFETCH_CHARACTERS, uniqueSuffix)
+ * eventEmitter.dispatch(EventType.ERROR_MESSAGE, uniqueSuffix)
+ * eventEmitter.unsubscribe(EventType.ERROR_MESSAGE, uniqueSuffix)
  */
 /** 
  * subscribe
  * 
- * eventEmitter.subscribe(EventType.REFETCH_CHARACTERS, uniqueSuffix, () => fetchLatestPostComments())
+ * eventEmitter.subscribe(EventType.ERROR_MESSAGE, uniqueSuffix, () => fetchLatestPostComments())
 */

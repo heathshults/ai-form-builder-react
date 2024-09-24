@@ -7,6 +7,21 @@ interface Field {
   type: string;
   name: string;
   label: string;
+  labelClass?: string;
+  inputClass?: string;
+  placeholder?: string;
+  options?: string[]; // For select fields
+  required?: boolean;
+  disabled?: boolean;
+  readOnly?: boolean;
+  value?: string | number;
+  validationRegx?: RegExp;
+  errorMessage?: string;
+  style: React.CSSProperties;
+  textareaHeight: string;
+  onchange?: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  onclick?: (string) => void;
+  [key: string]: undefined | string | number | boolean | string[] | RegExp | React.CSSProperties | ((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void) | ((string) => void);
 }
 
 interface FormFieldsContextType {
@@ -15,6 +30,28 @@ interface FormFieldsContextType {
   removeField: (name: string) => void;
   setFields: (fieldsString: string) => void;
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// const formFieldsObject = {
+//   type, 
+//   id, 
+//   name, 
+//   label,
+//   labelClass,
+//   inputClass,
+//   placeholder,
+//   textareaHeight,
+//   options,
+//   required='false',
+//   disabled='false',
+//   readOnly='false',
+//   value,
+//   validationRegx,
+//   errorMessage,
+//   style,
+//   onchange,
+//   onclick
+// }
 
 const FormFieldsContext = createContext<FormFieldsContextType | undefined>(undefined);
 
@@ -30,14 +67,25 @@ export const FormFieldsProvider: React.FC<{ children: ReactNode }> = ({ children
   };
 
   const setFields = (fieldsString: string) => {
-    const fieldsArray = fieldsString.split(',').map((fieldName) => ({
-      id: uuidv4(),
-      type: 'text',
-      name: fieldName.trim(),
-      label: fieldName.trim(),
-      required:true,
-      
-    }));
+    const fieldsArray = fieldsString.split(',').map((fieldString) => {
+      const [namePart, ...propsParts] = fieldString.split(':');
+      const fieldObject: FormFieldProps = {
+        id: uuidv4(),
+        name: namePart.trim(),
+        type: 'text', // Default type
+        label: namePart.trim(),
+      };
+
+      propsParts.forEach((propPart) => {
+        const [key, value] = propPart.split('=');
+        if (key && value) {
+          fieldObject[key.trim()] = value.trim().replace(/['"]/g, ''); // Remove quotes
+        }
+      });
+
+      return fieldObject;
+    });
+    console.log('myfieldsArray', fieldsArray);
     setFieldsState(fieldsArray);
   };
 

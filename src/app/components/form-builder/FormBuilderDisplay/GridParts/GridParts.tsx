@@ -47,8 +47,8 @@ const {col, row, width, height} = Config;
 export const css = {
   hsFormbuilderGrid: {
     display: 'grid',
-    gridTemplateColumns: `repeat(${col}, 1fr)`,
-    gridTemplateRows: `repeat(${row}, 1fr)`,
+    gridTemplateColumns: `repeat(${col}, auto)`,
+    gridTemplateRows: `repeat(${row}, auto)`,
     gridGap: '1rem',
     marginTop: '1rem',
     color: 'var(--text-color)',
@@ -71,6 +71,7 @@ export const css = {
   hsFormbuilderGridItem: {
     display: 'inline-flex',
     flexDirection: 'column',
+    flex: '1 1 auto',
     justifyContent: 'center',
     alignItems: 'center',
     gridArea: 'auto',
@@ -78,7 +79,7 @@ export const css = {
     margin: '.25rem',
     border: '1px solid #ccc',
     backgroundColor: '#191919',
-    minWidth: '150px',
+    
     boxSizing: 'border-box',
   },
   'hsFormbuilderGridItem:lastChild)': {
@@ -225,6 +226,7 @@ export const Tools = ({cols, rows, width, height}: ITools): React.FC => {
                 type="number" 
                 placeholder="3" 
                 defaultValue={config.col}
+                onChange={(e) => setConfig({...config, col: e.target.value})}
               />
             </div>
           </div>

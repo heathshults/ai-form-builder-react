@@ -1,32 +1,67 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 import * as React from 'react';
 // import type { FormFieldProps } from '@app/types';
 import './GetFormField.scss';
+import { FormFieldProps } from '@app/types';
+import { formFieldProperties } from '@app/components/form-builder/FormBuilderDisplay/form-field-properties';
 
 
-export const GetFormField = ({ type, id, name, label, labelClass, inputClass, placeholder, textareaHeight, options, required, disabled, readOnly, value, validationRegx, errorMessage, style, onChange, onClick }: FormFieldProps) => {
+export const GetFormField: FormFieldProps = ({ 
+    type='text', id='', name='input name', label='label text', labelClass, inputClass, 
+    placeholder, textareaHeight, options, required='false', 
+    disabled='false', readOnly, value, validationRegx, 
+    errorMessage, style, onchange, onclick }: FormFieldProps) => {
+  
+  function getInput(type) {
+    return React.createElement(
+      type,
+      {}
+    )
+  }
+
   switch (type) {
     case 'text':
       return (
         <div className="form-group form-floating">
+          
+          <input 
+            placeholder={placeholder}  
+            require={required.toString()} 
+            type="text" 
+            id={id} name={name}
+            className={`form-control ${inputClass}`} 
+          />
           <label className={labelClass} htmlFor={id}>{label}</label>
-          <input placeholder={label} require={required} type="text" id={id} name={name} className={`form-control ${inputClass}`} placeholder={placeholder} />
         </div>
       );
     case 'number':
       return (
         <div className="form-group form-floating">
-          <input placeholder={label} require={required} type="number" id={id} name={name} className={`form-control ${inputClass}`} placeholder={placeholder} />
+          <input 
+            placeholder={placeholder}  
+            require={required.toString()} 
+            type="number" 
+            id={id} 
+            name={name} 
+            className={`form-control ${inputClass}`} 
+          />
           <label className={labelClass} htmlFor={id}>{label}</label>
         </div>
       );
     case 'select':
       return (
         <div className="form-group form-floating">
-          <select id={id} name={name} className={`form-select ${inputClass}`}>
+          <select 
+            id={id} 
+            name={name} 
+            className={`form-select ${inputClass}`}
+            value={}
+            onChange={(e) => e.target.value = e.target.options[e.target.selectedIndex].value})}
+          >
           <option selected>Make a selection</option>
             {options?.map((option, index) => (
-              <option key={index} value={option}>
+              <option key={index} value={option} >
                 {option}
               </option>
             ))}
@@ -37,7 +72,14 @@ export const GetFormField = ({ type, id, name, label, labelClass, inputClass, pl
     case 'checkbox':
       return (
         <div className="form-group form-check">
-          <input placeholder={label} require={required} type="checkbox" id={id} name={name} className="form-check-input" />
+          <input 
+            placeholder={placeholder}  
+            require={required.toString()} 
+            type="checkbox" 
+            id={id} 
+            name={name} 
+            className="form-check-input" 
+          />
           <label className={`form-check-label  ${labelClass}`} htmlFor={id}>
             {label}
           </label>
@@ -46,21 +88,36 @@ export const GetFormField = ({ type, id, name, label, labelClass, inputClass, pl
     case 'radio':
       return (
         <div className="form-group form-floating">
-          <label className={labelClass}>{label}</label>
       {options?.map((option, index) => (
             <div key={index} className="form-check">
-              <input placeholder={label} require={required} type="radio" id={`${id}-${index}`} name={name} value={option} className="form-check-input" />
+              <input 
+                placeholder={placeholder}  
+                require={required.toString()} 
+                type="radio" id={`${id}-${index}`} 
+                name={name} 
+                value={option} 
+                className="form-check-input" 
+              />
               <label className={`form-check-label ${labelClass}`} htmlFor={`${id}-${index}`} >
                 {option}
               </label>
             </div>
           ))}
+                    <label className={labelClass}>{label}</label>
         </div>
       );
     case 'textarea':
       return (
         <div className="form-group form-floating">
-          <textarea require={required} type="number" id={id} name={name} style={textareaHeight} className={`form-control ${inputClass}`} placeholder={placeholder} />
+          <textarea 
+            require={required.toString()} 
+            type="number" 
+            id={id} 
+            name={name} 
+            style={textareaHeight} 
+            className={`form-control ${inputClass}`} 
+            placeholder={placeholder} 
+          />
           <label className={labelClass} htmlFor={id}>{label}</label>
         </div>
       );

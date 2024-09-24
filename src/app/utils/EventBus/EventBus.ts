@@ -1,6 +1,6 @@
 
 interface ICallbackList {
-  [id: string]: Function;
+  [id: string]: (...args: unknown[]) => void;
 }
 
 interface IEventObject {
@@ -12,9 +12,9 @@ interface ISubscribe {
 }
 
 interface IEventBus {
-  publish<T extends any[]>(eventName: string, ...args: T): void;
-  subscribe(eventName: string, callback: Function): ISubscribe;
-  subscribeOnce(eventName: string, callback: Function): ISubscribe;
+  publish<T extends unknown[]>(eventName: string, ...args: T): void;
+  subscribe(eventName: string, callback: ()=>void): ISubscribe;
+  subscribeOnce(eventName: string, callback: ()=>void): ISubscribe;
   clear(eventName: string): void;
 }
 
@@ -22,13 +22,15 @@ export class EventBus implements IEventBus {
   private _eventObject: IEventObject;
   private _callbackId: number;
   constructor() {
-    // initialize event list
-    this._eventObject = {};
-    // id of the callback function list
-    this._callbackId = 0;
+    
+    this._eventObject = {}; // initialize event list
+    
+    this._callbackId = 0; // id of the callback function list
   }
+  
   // publish event
-  publish<T extends any[]>(eventName: string, ...args: T): void {
+  publish<T extends unknown[]>(eventName: string, ...args: T): void {
+    
     // Get all the callback functions of the current event
     const callbackObject = this._eventObject[eventName];
 

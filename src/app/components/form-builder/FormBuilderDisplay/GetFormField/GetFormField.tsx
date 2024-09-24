@@ -12,6 +12,14 @@ export const GetFormField: FormFieldProps = ({
     placeholder, textareaHeight, options, required='false', 
     disabled='false', readOnly, value, validationRegx, 
     errorMessage, style, onchange, onclick }: FormFieldProps) => {
+
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    let theSelect
+    if (e.target) {
+      theSelect = e.target as HTMLSelectElement
+      theSelect.options[theSelect.selectedIndex].value
+    }
+  }
   
   function getInput(type) {
     return React.createElement(
@@ -57,7 +65,7 @@ export const GetFormField: FormFieldProps = ({
             name={name} 
             className={`form-select ${inputClass}`}
             value={}
-            onChange={(e) => e.target.value = e.target.options[e.target.selectedIndex].value})}
+            onChange={handleSelectChange}
           >
           <option selected>Make a selection</option>
             {options?.map((option, index) => (

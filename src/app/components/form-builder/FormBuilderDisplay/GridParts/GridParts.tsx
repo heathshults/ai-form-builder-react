@@ -47,8 +47,9 @@ const {col, row, width, height} = Config;
 export const css = {
   hsFormbuilderGrid: {
     display: 'grid',
-    gridTemplateColumns: `repeat(${col}, auto)`,
-    gridTemplateRows: `repeat(${row}, auto)`,
+    gridTemplateColumns: `repeat(${col}, 1fr)`,
+    // gridTemplateRows: `repeat(${row}, 1fr)`,
+    gridTemplateRows: `auto`,
     gridGap: '1rem',
     marginTop: '1rem',
     color: 'var(--text-color)',
@@ -58,6 +59,7 @@ export const css = {
     height: '100%',
   },
   hsFormbuilderGridRow: {
+    display: 'flex',
     flex: '1 1 auto',
     flexDirection: 'row',
     justifyContent: 'left',
@@ -69,9 +71,9 @@ export const css = {
     boxSizing: 'border-box',
   },
   hsFormbuilderGridItem: {
-    display: 'inline-flex',
-    flexDirection: 'column',
-    flex: '1 1 auto',
+    display: 'flex',
+    flexDirection: 'row',
+    flex: '1 1 100%',
     justifyContent: 'center',
     alignItems: 'center',
     gridArea: 'auto',
@@ -79,7 +81,9 @@ export const css = {
     margin: '.25rem',
     border: '1px solid #ccc',
     backgroundColor: '#191919',
-    
+    width: '100%',
+    // minWidth: '50px',
+    // maxWidth: '100%',
     boxSizing: 'border-box',
   },
   'hsFormbuilderGridItem:lastChild)': {
@@ -91,6 +95,7 @@ export const css = {
   },
   hsFormbuilderGridFormgroup: {
     color: 'var(--text-color)',
+    
   }
 
 }
@@ -117,7 +122,8 @@ export const GridRow = ({ children }: { children: React.ReactNode }) => (
   <div className="hs-formbuilder-grid-row" style={css.hsFormbuilderGridRow}>{children}</div>
 );
 
-export const GridItem = ({ children }: GridPartsProps) => <div className="hs-formbuilder-grid-item" style={css.hsFormbuilderGridItem}>{children}</div>;
+export const GridItem = ({ children }: GridPartsProps) => 
+  <div className="hs-formbuilder-grid-item" style={css.hsFormbuilderGridItem}>{children}</div>;
 
 export const GridContainer = ({ children, col, row }: IDragonDropGridContainer) => {
   const gridColumns = Array.from({ length: col });

@@ -113,20 +113,20 @@ export const FormBuilderDisplay: React.FC = memo(function FormBuilderDisplay({ c
                   <div key={`row-${rowIndex}`} className="hs-formbuilder-grid-row" style={css.hsFormbuilderGridRow}>
                     {group.map((item, colIndex) => (
                       item ? (
-                        <div className='hs-formbuilder-grid-formgroup' key={`col-${rowIndex}-${colIndex}`}>
+                        <div style={css.hsFormbuilderGridItem} className='hs-formbuilder-grid-item' key={`col-${rowIndex}-${colIndex}`}>
                         <DnDFormGroup
                           id={item.id}
                           key={`col-${rowIndex}-${colIndex}`}
-                          className="hs-formbuilder-grid-item"
-                          style={css.hsFormbuilderGridItem}
+                          className="hs-formbuilder-grid-formgroup"
+                          
                           type={DnDFormGroupTypes.DNDFORMGROUP}
                           moveDnDFormGroup={moveDnDFormGroup}
                           findDnDFormGroup={findDnDFormGroup}
                         >
-                          <div item={item.id} className="hs-formbuilder-grid-formgroup">
+                          {/* <div item={item.id} className="hs-formbuilder-grid-formgroup"> */}
 
 
-                            {/* <FormFieldMenu /> */}
+                            <FormFieldMenu />
                             <GetFormField
                               type={item.type}
                               label={item.label}
@@ -137,7 +137,7 @@ export const FormBuilderDisplay: React.FC = memo(function FormBuilderDisplay({ c
                             />
                             {/* <input id={item.name} type={item.type} className="form-control" name={item.name} placeholder={item.name} /> 
                             *<label htmlFor={item.name} className="text-capitalize">{item.label}</label> */}
-                          </div>
+                          {/* </div> */}
                         </DnDFormGroup>
                         </div>
                       ) : null

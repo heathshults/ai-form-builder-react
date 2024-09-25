@@ -5,8 +5,8 @@ import { useDrag, useDrop } from 'react-dnd'
 import { DnDFormGroupTypes } from '@app/types'
 
 const style: CSSProperties = {
-  display: 'inline-block',
-  width: '38%',
+  display: 'flex',
+  width: '1008%',
   border: '2px solid #252525',
   padding: '0.5rem 1rem',
   marginBottom: '.5rem',

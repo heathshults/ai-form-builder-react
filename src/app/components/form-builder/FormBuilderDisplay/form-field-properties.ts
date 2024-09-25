@@ -1,6 +1,6 @@
 import { FormFieldProps } from "@app/types";
 
-export const formFieldProperties: FormFieldProps = {
+export const formFieldProperties: FormFieldProps = [{
   type: 'text',
   id: 'text',
   name: 'text',
@@ -19,7 +19,7 @@ export const formFieldProperties: FormFieldProps = {
   style: {},
   onChange: (e) => e.target.value,
   onClick: (e) => e.target.value,
-};
+}];
 export const formFieldPropsArray = Object.keys(formFieldProperties);
 export default formFieldProperties;
 console.log('FormFieldAttributes', formFieldProperties);

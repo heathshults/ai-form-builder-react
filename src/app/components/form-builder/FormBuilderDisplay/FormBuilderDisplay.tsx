@@ -87,6 +87,13 @@ export const FormBuilderDisplay: React.FC = memo(function FormBuilderDisplay({ c
 
     const [ , drop ] = useDrop(() => ({ accept: DnDFormGroupTypes.DNDFORMGROUP }))
 
+    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      let theSelect
+      if (e.target) {
+        theSelect = e.target as HTMLSelectElement
+        theSelect.options[theSelect.selectedIndex].value
+      }
+    }
 
     return (
       <>
@@ -119,7 +126,7 @@ export const FormBuilderDisplay: React.FC = memo(function FormBuilderDisplay({ c
                           <div item={item.id} className="hs-formbuilder-grid-formgroup">
 
 
-                            {/* <FormFieldMenu/> */}
+                            {/* <FormFieldMenu /> */}
                             <GetFormField
                               type={item.type}
                               label={item.label}
@@ -152,6 +159,7 @@ export const FormBuilderDisplay: React.FC = memo(function FormBuilderDisplay({ c
     <>
       <div className="container p-3 hs-fields-display">
         <DndProvider backend={HTML5Backend}>
+        <FormFieldMenu />
           <FormFields newFields={fields} />
         </DndProvider>
       </div>

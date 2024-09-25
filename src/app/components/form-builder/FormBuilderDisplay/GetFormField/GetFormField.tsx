@@ -20,7 +20,7 @@ export const GetFormField: FormFieldProps = ({
       theSelect.options[theSelect.selectedIndex].value
     }
   }
-  
+
   function getInput(type) {
     return React.createElement(
       type,
@@ -30,7 +30,7 @@ export const GetFormField: FormFieldProps = ({
 
   switch (type) {
     case 'text':
-      return (
+      return (<>
         <div className="form-group form-floating">
           
           <input 
@@ -42,6 +42,22 @@ export const GetFormField: FormFieldProps = ({
           />
           <label className={labelClass} htmlFor={id}>{label}</label>
         </div>
+        </>
+      );
+    case 'email':
+      return (<>
+        <div className="form-group form-floating">
+          
+          <input 
+            placeholder={placeholder}  
+            require={required.toString()} 
+            type="text" 
+            id={id} name={name}
+            className={`form-control ${inputClass}`} 
+          />
+          <label className={labelClass} htmlFor={id}>{label}</label>
+        </div>
+        </>
       );
     case 'number':
       return (
@@ -58,16 +74,16 @@ export const GetFormField: FormFieldProps = ({
         </div>
       );
     case 'select':
-      return (
+      return (<>
         <div className="form-group form-floating">
           <select 
             id={id} 
             name={name} 
             className={`form-select ${inputClass}`}
-            value={}
+            
             onChange={handleSelectChange}
           >
-          <option selected>Make a selection</option>
+          <option value="make a selection">Make a selection</option>
             {options?.map((option, index) => (
               <option key={index} value={option} >
                 {option}
@@ -76,7 +92,7 @@ export const GetFormField: FormFieldProps = ({
           </select>
           <label className={labelClass} htmlFor={id}>{label}</label>
         </div>
-      );
+      </>);
     case 'checkbox':
       return (
         <div className="form-group form-check">

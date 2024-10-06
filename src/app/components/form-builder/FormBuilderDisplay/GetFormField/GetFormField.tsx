@@ -5,7 +5,7 @@ import * as React from 'react';
 import './GetFormField.scss';
 import { FormFieldProps } from '@app/types';
 import { formFieldProperties } from '@app/components/form-builder/FormBuilderDisplay/form-field-properties';
-
+import Select from '@components/form-builder/Select'
 
 export const GetFormField: FormFieldProps = ({ 
     type='text', id='', name='input name', label='label text', labelClass, inputClass, 
@@ -13,13 +13,15 @@ export const GetFormField: FormFieldProps = ({
     disabled='false', readOnly, value, validationRegx, 
     errorMessage, style, onchange, onclick }: FormFieldProps) => {
 
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>, val) => {
     let theSelect
     if (e.target) {
       theSelect = e.target as HTMLSelectElement
       theSelect.options[theSelect.selectedIndex].value
     }
   }
+
+  options = ['TX', 'LA','OK']
 
   function getInput(type) {
     return React.createElement(
@@ -76,7 +78,17 @@ export const GetFormField: FormFieldProps = ({
     case 'select':
       return (<>
         <div className="form-group form-floating">
-          <select 
+          
+        <Select
+          id={id} 
+          name={name} 
+          className={`form-select ${inputClass}`}
+          values={options}
+          selectedValue="lime"
+          onValueChange={(e, val) => handleSelectChange(e, val)}
+        />
+          
+          {/* <select 
             id={id} 
             name={name} 
             className={`form-select ${inputClass}`}
@@ -89,7 +101,7 @@ export const GetFormField: FormFieldProps = ({
                 {option}
               </option>
             ))}
-          </select>
+          </select> */}
           <label className={labelClass} htmlFor={id}>{label}</label>
         </div>
       </>);

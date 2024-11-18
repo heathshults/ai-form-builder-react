@@ -101,8 +101,10 @@ export const FormBuilderDisplay: React.FC = memo(function FormBuilderDisplay({ c
           <GridContainer>
             {!dndFormGroups.length ? (
               <div className="">
-                <div className="p-3">
-                  <p>To get started enter field names in the prompt below and click &quot;Send&quot;</p>
+                <div className="p-3 pt-0">
+                  <p>To get started enter field names in the prompt below 
+                    and click &quot;Send&quot;
+                  </p>
 
                   <GetFormField type="text" label="Test Label" />
                 </div>
@@ -157,7 +159,7 @@ export const FormBuilderDisplay: React.FC = memo(function FormBuilderDisplay({ c
 
   return (
     <>
-      <div className="container p-3 hs-fields-display">
+      <div className="container p-3 pt-0 hs-fields-display">
         <DndProvider backend={HTML5Backend}>
         <FormFieldMenu />
           <FormFields newFields={fields} />

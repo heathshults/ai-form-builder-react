@@ -27,7 +27,7 @@
   position: relative;
   display: flex;
   flex: 1 1 auto;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   gap: 1rem;
   width: 550px;
@@ -36,9 +36,9 @@
   margin-bottom: 1rem;
 
   .hs-input-label {
-    position: absolute;
-    top: -25px;
-    left: 0;
+    // position: absolute;
+    // top: -25px;
+    // left: 0;
     font-size: .875rem;
     color: #dedede;
   }
@@ -64,7 +64,7 @@ input:-internal-autofill-selected {
 
 .hs-action-button-wrapper {
   position: absolute;
-  top: 50%;
+  top: 103px;
   right: 5px;
   z-index: 500;
   display: inline-flex;

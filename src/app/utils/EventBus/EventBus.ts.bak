@@ -62,7 +62,7 @@ export class EventBus implements IEventBus {
     this._eventObject[eventName][id] = callback;
 
     // Every time you subscribe to an event, a unique unsubscribe function is generated
-    const unSubscribe = () => {
+    function unSubscribe() {
       // clear the callback function of this subscriber
       delete this._eventObject[eventName][id];
 
@@ -91,7 +91,7 @@ export class EventBus implements IEventBus {
     this._eventObject[eventName][id] = callback;
 
     // Every time you subscribe to an event, a unique unsubscribe function is generated
-    const unSubscribe = () => {
+    const unsubscribe = () => {
       // clear the callback function of this subscriber
       delete this._eventObject[eventName][id];
 
@@ -101,7 +101,7 @@ export class EventBus implements IEventBus {
       }
     };
 
-    return { unSubscribe };
+    return { unsubscribe };
   }
 
   // clear event

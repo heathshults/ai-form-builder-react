@@ -1,0 +1,18 @@
+
+.box {
+  background-color: #622789;
+  border: 1px solid #301145;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 150px;
+  height: 150px;
+  .red-box {
+    background-color: #750000;
+    border-color: #4d0202;
+  }
+  .blue-box {
+    background-color: #0f032c;
+    border-color: #3c1a8c;
+  }
+}

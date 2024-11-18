@@ -1,2 +1,2 @@
-import EventBus from './EventBus'
+import EventBus from './EventBus.ts.bak'
 export default EventBus

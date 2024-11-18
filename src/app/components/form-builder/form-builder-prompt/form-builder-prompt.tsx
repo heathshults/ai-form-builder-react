@@ -25,19 +25,26 @@ export const FormBuilderPrompt = ({ }: FormBuilderPromptProps) => {
     !isSaveButtonActive ? setIsSaveButtonActive(true) : void (0);
   }
 
+  
+
   React.useEffect(() => {
     isSaveButtonActive
       ? buttonGroup.current.classList.add('btn-group')
-      : buttonGroup.current.classList.remove('btn-group');
+      : buttonGroup.current.classList.remove('btn-group')
+      
+      
 
-  }, [ isSaveButtonActive ]);
+  }, [ isSaveButtonActive ])
 
+  
   return (
     <>
       <div className="hs-form-builder">
+      
         <form onSubmit={handleSubmit} className="hs-prompt-form">
           <div className="hs-prompt-input-wrapper">
-            <label className="hs-input-label" htmlFor="fields">Enter form fields (comma-separated):</label>
+            <label className="hs-input-label" htmlFor="fields">Enter form fields (comma-separated ie: Name:type=&apos;text&apos;:required, Phone:required, email:type=&aposemail&apos:required, address:type=&apostext&apos, state:type=&aposselect&apos, zip, city):</label>
+            <div className="d-relative w-100" style={{display: 'relative'}}>
             <input
               id="fields"
               name="fields"
@@ -64,6 +71,7 @@ export const FormBuilderPrompt = ({ }: FormBuilderPromptProps) => {
                 </button>
                 : null}
             </div>
+            </div>
           </div>
 
         </form>
@@ -73,6 +81,61 @@ export const FormBuilderPrompt = ({ }: FormBuilderPromptProps) => {
 };
 
 export default FormBuilderPrompt;
+
+
+export function BlueBox() {
+  const [blueClass, setBlueClass] = React.useState<string>('blue-box');
+  const handleEvent = (cssClass) => {
+    cssClass === 'blue' ? setBlueClass('blue-box') : void(0)
+  }
+
+  React.useEffect(() => {
+    eventEmitter.subscribe('blueEvent', handleEvent('blue'))
+    return () => {
+      cleanup
+    }
+  }, [blueClass])
+
+  return (
+    <div className={`box ${blueClass}`}>
+      <h1>Blue Box</h1>
+    </div>
+  );
+}
+
+export function RedBox() {
+  const [redClass, setRedClass] = React.useState<string>('red-box');
+
+  const handleEvent = (cssClass) => {
+    cssClass === 'blue' ? setRedClass('blue-box') : void(0)
+  }
+
+  React.useEffect(() => {
+    eventEmitter.subscribe('redEvent', handleEvent('red'))
+    return () => {
+      cleanup
+    }
+  }, [redClass])
+
+
+  return (
+    <div className={`box ${redClass}`}>
+      <h1>Red Box</h1>
+    </div>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 {/* <div className="hs-form-builder-prompt">
     <div className="hs-form-builder-prompt__content">

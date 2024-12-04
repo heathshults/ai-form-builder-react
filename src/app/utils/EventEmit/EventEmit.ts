@@ -5,7 +5,7 @@ export enum EventType {
 /**
  * Event emitter to subscribe, dispatch, and unsubscribe to events.
  */
-export class EventEmitter {
+export default class EventEmit {
   // This is event object to store events.
   events: Record<string, Array<(data?: unknown) => void>> = {};
 
@@ -35,7 +35,6 @@ export class EventEmitter {
     delete this.events[eventName];
   }
 }
-export default EventEmitter;
 /**
  * dispatch and unsubscribe
  * 

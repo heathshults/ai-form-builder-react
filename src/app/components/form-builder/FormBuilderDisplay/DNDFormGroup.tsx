@@ -4,13 +4,13 @@ import { useDrag, useDrop } from 'react-dnd'
 
 import { DnDFormGroupTypes } from '@app/types'
 
-const style: CSSProperties = {
+const style: CSSProperties = { 
   display: 'flex',
   width: '1008%',
-  border: '2px solid #252525',
+  border: '2px solid transparent', // #252525
   padding: '0.5rem 1rem',
   marginBottom: '.5rem',
-  backgroundColor:' var(--background-color)',
+  backgroundColor:' transparent', //#252525
   cursor: 'move',
   boxSizing: 'border-box',
 }

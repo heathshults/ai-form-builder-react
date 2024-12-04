@@ -43,7 +43,7 @@ export const FormBuilderPrompt = ({ }: FormBuilderPromptProps) => {
       
         <form onSubmit={handleSubmit} className="hs-prompt-form">
           <div className="hs-prompt-input-wrapper">
-            <label className="hs-input-label" htmlFor="fields">Enter form fields (comma-separated ie: Name:type=&apos;text&apos;:required, Phone:required, email:type=&aposemail&apos:required, address:type=&apostext&apos, state:type=&aposselect&apos, zip, city):</label>
+            <label className="hs-input-label" htmlFor="fields">Enter form fields (comma-separated ie: Name:type=&apos;text&apos;:required, Phone:required, email:type=&apos;email&apos;:required, address:type=&apos;text&apos;, state:type=&apos;select&apos;, zip, city):</label>
             <div className="d-relative w-100" style={{display: 'relative'}}>
             <input
               id="fields"

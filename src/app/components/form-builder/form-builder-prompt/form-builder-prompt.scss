@@ -108,6 +108,7 @@ input:-internal-autofill-selected {
   --hs-btn-save-border-hover-color: #ebebeb;
   display: inline-flex;
   align-items: center;
+  align-self: center;
   color: #dedede;
   background-color: var(--hs-btn-save-bg);
   gap: .5rem;

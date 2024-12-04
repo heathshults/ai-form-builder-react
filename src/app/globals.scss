@@ -5,7 +5,8 @@
 // @import "~bootstrap/scss/mixins";
 // @import "~bootstrap/scss/utilities";
 // @import '~bootstrap/scss/bootstrap';
-@import "~bootstrap/dist/css/bootstrap.min.css";
+// @import "~bootstrap/dist/css/bootstrap.min.css";
+@import "./assets/sass/scss/bootstrap.scss";
 
 @tailwind base;
 @tailwind components;

@@ -27,6 +27,6 @@
       "@views/*": ["src/app/pages/*"]    
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/app/types.ts", ".next/types/**/*.ts", "src/app/utils/EventBus/EventBus.ts.bak"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/app/types.ts", ".next/types/**/*.ts", "src/app/utils/EventEmit/EventBus.ts.bak"],
   "exclude": ["node_modules"]
 }

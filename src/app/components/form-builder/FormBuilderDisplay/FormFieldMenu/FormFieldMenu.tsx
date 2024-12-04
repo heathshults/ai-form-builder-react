@@ -67,7 +67,7 @@ const FormFieldMenu: React.FC<FormFieldMenuProps> = () => {
 
           <li key={`key-${index}-${attr}`} className="dropdown-item input-group-text">
             <label htmlFor={`${index}-${attr}`}>{attr}</label>
-            <input id={`${index}-${attr}`} name={attr} type="checkbox" value={attr} />
+            <input id={`${index}-${attr}`} name={attr} type="checkbox" value={attr} className="form-control" />
           </li>
 
         ))}
